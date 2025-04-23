@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Cashly</string>
+    <string name="slide_image">Slide Image</string>
+    <string name="onboarding_slides_indicator">Onboarding slides progress indicator</string>
+    <string name="get_started">Get Started</string>
+    <string name="welcome_title">Welcome to Cashly</string>
+    <string name="budget_title">Budget Overview</string>
+    <string name="analytics_title">Analytics</string>
+    <string name="quick_transaction">Quick Transaction</string>
+    <string name="amount">Amount</string>
+    <string name="description">Description</string>
+    <string name="add_expense">Add Expense</string>
+    <string name="add_income">Add Income</string>
+    <string name="recent_transactions">Recent Transactions</string>
+    <string name="recent_transactions_list_content">List of recent transactions</string>
+    
+    <!-- Login Screen -->
+    <string name="app_logo">App logo</string>
+    <string name="welcome_message">Welcome to Cashly</string>
+    <string name="pin_hint">Enter PIN</string>
+    <string name="login_with_pin">Login with PIN</string>
+    <string name="login_with_biometric">Login with Biometric</string>
+    
+    <!-- Transaction Dialog -->
+    <string name="transaction_title">Title</string>
+    <string name="transaction_amount">Amount</string>
+    <string name="transaction_category">Category</string>
+    <string name="income">Income</string>
+    <string name="expense">Expense</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+    <string name="add_transaction">Add transaction</string>
+    <string name="transactions_list">List of transactions</string>
+    <string name="title_text">Title</string>
+    
+    <!-- Settings Screen -->
+    <string name="settings_title">Settings</string>
+    <string name="currency_label">Currency</string>
+    <string name="save_settings">Save Settings</string>
+    <string name="data_backup">Data Backup</string>
+    <string name="create_backup">Create Backup</string>
+    <string name="restore_backup">Restore Backup</string>
+    
+    <!-- Budget Screen -->
+    <string name="monthly_budget">Monthly Budget</string>
+    <string name="enter_monthly_budget">Enter monthly budget</string>
+    <string name="set_budget">Set Budget</string>
+    <string name="current_spending">Current Spending</string>
+    <string name="remaining_budget">Remaining Budget</string>
+    <string name="budget_progress">Budget Progress</string>
+    <string name="budget_remaining">Remaining: %s</string>
+    <string name="budget_comparison">Budget vs Expenses</string>
+    <string name="hint_enter_budget">Enter budget amount</string>
+    
+    <!-- Navigation -->
+    <string name="home">Home</string>
+    <string name="transactions">Transactions</string>
+    <string name="budget">Budget</string>
+    <string name="analytics">Analytics</string>
+    <string name="settings">Settings</string>
+    <string name="transaction_icon">Transaction icon</string>
+    
+    <!-- Accessibility -->
+    <string name="select_transaction_category">Select transaction category</string>
+    <string name="select_transaction_date">Select transaction date</string>
+    <string name="toggle_transaction_type">Toggle between income and expense</string>
+    <string name="transaction_type">Transaction Type</string>
+    
+    <!-- Transaction Actions -->
+    <string name="delete_transaction">Delete Transaction</string>
+    <string name="delete_transaction_confirmation">Are you sure you want to delete this transaction?</string>
+    <string name="delete">Delete</string>
+    
+    <!-- Analytics -->
+    <string name="income_distribution">Income Distribution</string>
+    <string name="income_trend">Income Trend</string>
+    <string name="expense_trend">Expense Trend</string>
+    <string name="budget_vs_expenses">Budget vs Expenses</string>
+    <string name="budget_balance">Budget Balance: %s</string>
+    <string name="budget_progress_percentage">Budget Progress: %d%%</string>
+</resources>

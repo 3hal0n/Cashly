@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="transaction_categories">
+        <item>Food</item>
+        <item>Transport</item>
+        <item>Bills</item>
+        <item>Entertainment</item>
+        <item>Shopping</item>
+        <item>Healthcare</item>
+        <item>Education</item>
+        <item>Housing</item>
+        <item>Salary</item>
+        <item>Investment</item>
+        <item>Bonus</item>
+        <item>Other Income</item>
+        <item>Other Expense</item>
+    </string-array>
+
+    <string-array name="currencies">
+        <item>USD</item>
+        <item>EUR</item>
+        <item>GBP</item>
+        <item>JPY</item>
+        <item>INR</item>
+        <item>CAD</item>
+        <item>AUD</item>
+    </string-array>
+</resources> 
