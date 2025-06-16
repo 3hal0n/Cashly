@@ -58,9 +58,6 @@ Cashly is a modern, user-friendly Android application designed to help users man
 - Bill reminders and notifications
 - Multiple account support
 
-## 🤝 Contributing
-Contributions are welcome! Please feel free to submit a Pull Request.
-
 ## 🙏 Acknowledgments
 - Material Design Guidelines
 - AndroidX Libraries
