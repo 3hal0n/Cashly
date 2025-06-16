@@ -26,29 +26,68 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Expenses"
+                    android:layout_margin="10dp"
+                    />
                 <TextView
                     android:id="@+id/textTotalExpenses"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?attr/textAppearanceHeadline6"
-                    android:textColor="@color/expense_red" />
+                    android:textColor="@color/expense_red"
+                    android:layout_margin="10dp"/>
 
+                </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Income"
+                    android:layout_margin="10dp"
+                    />
                 <TextView
                     android:id="@+id/textTotalIncome"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:textAppearance="?attr/textAppearanceHeadline6"
-                    android:textColor="@color/income_green" />
+                    android:textColor="@color/income_green"
+                    android:layout_margin="10dp"/>
 
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Net Balance"
+                    android:layout_margin="10dp"
+                    />
                 <TextView
                     android:id="@+id/textNetBalance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:textAppearance="?attr/textAppearanceHeadline6"
-                    android:textColor="@color/primary_text" />
+                    android:textColor="@color/primary_text"
+                    android:layout_margin="10dp"/>
 
+            </LinearLayout>
                 <TextView
                     android:id="@+id/textBudgetProgress"
                     android:layout_width="wrap_content"

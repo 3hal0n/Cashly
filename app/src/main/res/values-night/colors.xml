@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Primary Colors (Dark Mode)-->
+    <color name="primary_background">#121212</color>
+    <color name="primary_surface">#1E1E1E</color>
+    <color name="primary_text">#FFFFFF</color>
+
+    <!-- Secondary Colors (Dark Mode)-->
+    <color name="secondary_accent">#7BCCFE</color>
+    <color name="secondary_surface">#2C3E50</color>
+    <color name="secondary_text">#BBBBBB</color>
+
+    <!-- Accent Colors (Dark Mode)-->
+    <color name="accent_success">#66BB6A</color>
+    <color name="accent_error">#EF5350</color>
+    <color name="accent_warning">#FFCA28</color>
+
+    <!-- Standard Colors -->
+    <color name="black">#FFFFFF</color>
+    <color name="white">#000000</color>
+
+    <color name="primary">#90CAF9</color>
+    <color name="primary_dark">#42A5F5</color>
+    <color name="primary_light">#BBDEFB</color>
+    <color name="accent">#F48FB1</color>
+    <color name="income_green">#C5E1A5</color>
+    <color name="expense_red">#FF8A80</color>
+    <color name="progress_track">#616161</color>
+</resources> 

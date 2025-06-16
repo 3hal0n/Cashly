@@ -9,6 +9,7 @@ import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
 import com.example.cashly.MainActivity
 import com.example.cashly.R
+import com.example.cashly.data.UserPreferences
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import java.util.concurrent.Executor
@@ -20,6 +21,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var executor: Executor
     private lateinit var biometricPrompt: BiometricPrompt
     private lateinit var promptInfo: BiometricPrompt.PromptInfo
+    private lateinit var userPreferences: UserPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +31,8 @@ class LoginActivity : AppCompatActivity() {
         loginButton = findViewById(R.id.loginButton)
         biometricLoginButton = findViewById(R.id.biometricLoginButton)
 
+        userPreferences = UserPreferences(this)
+
         setupBiometricLogin()
         setupPinLogin()
     }
@@ -36,7 +40,7 @@ class LoginActivity : AppCompatActivity() {
     private fun setupPinLogin() {
         loginButton.setOnClickListener {
             val pin = pinEditText.text.toString()
-            if (validatePin(pin)) {
+            if (userPreferences.validatePin(pin)) {
                 startMainActivity()
             } else {
                 Toast.makeText(this, "Invalid PIN", Toast.LENGTH_SHORT).show()
@@ -77,10 +81,6 @@ class LoginActivity : AppCompatActivity() {
                 biometricLoginButton.isEnabled = false
             }
         }
-    }
-
-    private fun validatePin(pin: String): Boolean {
-        return pin == "1234"
     }
 
     private fun startMainActivity() {

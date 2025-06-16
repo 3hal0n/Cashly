@@ -79,4 +79,15 @@
     <string name="budget_vs_expenses">Budget vs Expenses</string>
     <string name="budget_balance">Budget Balance: %s</string>
     <string name="budget_progress_percentage">Budget Progress: %d%%</string>
+    
+    <!-- PIN Change Dialog -->
+    <string name="change_pin">Change PIN</string>
+    <string name="current_pin">Current PIN</string>
+    <string name="new_pin">New PIN</string>
+    <string name="confirm_pin">Confirm New PIN</string>
+    <string name="change">Change</string>
+    <string name="pin_length_error">PIN must be 4 digits</string>
+    <string name="pin_mismatch_error">PINs do not match</string>
+    <string name="incorrect_pin_error">Current PIN is incorrect</string>
+    <string name="pin_change_success">PIN changed successfully</string>
 </resources>

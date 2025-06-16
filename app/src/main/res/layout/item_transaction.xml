@@ -18,30 +18,31 @@
 
         <ImageView
             android:id="@+id/categoryIcon"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="37dp"
+            android:layout_height="39dp"
             android:contentDescription="@string/transaction_icon"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/transactionDescription"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.088"
+            app:layout_constraintVertical_bias="0.054"
+            android:layout_margin="10dp"
             tools:src="@drawable/ic_category" />
 
         <TextView
             android:id="@+id/transactionDescription"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:ellipsize="end"
+            android:fontFamily="sans-serif-medium"
             android:maxLines="1"
             android:textAppearance="?attr/textAppearanceBody1"
             android:textColor="@color/primary_text"
             app:layout_constraintEnd_toStartOf="@id/transactionAmount"
             app:layout_constraintStart_toEndOf="@id/categoryIcon"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Grocery Shopping"
-            android:fontFamily="sans-serif-medium"
-            />
+            tools:text="Grocery Shopping" />
 
         <TextView
             android:id="@+id/transactionCategory"

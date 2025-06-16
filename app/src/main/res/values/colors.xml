@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Primary Colors (60%) -->
+    <!-- Primary Colors-->
     <color name="primary_background">#FAFAFA</color>
     <color name="primary_surface">#FFFFFF</color>
     <color name="primary_text">#212121</color>
 
-    <!-- Secondary Colors (30%) -->
+    <!-- Secondary Colors-->
     <color name="secondary_accent">#21A1EF</color>
     <color name="secondary_surface">#EEF2FF</color>
     <color name="secondary_text">#4F566B</color>
 
-    <!-- Accent Colors (10%) -->
+    <!-- Accent Colors-->
     <color name="accent_success">#4CAF50</color>
     <color name="accent_error">#FF4757</color>
     <color name="accent_warning">#FFA502</color>
@@ -23,7 +23,7 @@
     <color name="primary_dark">#1976D2</color>
     <color name="primary_light">#64B5F6</color>
     <color name="accent">#FF4081</color>
-    <color name="income_green">#4CAF50</color>
+    <color name="income_green">#8BC34A</color>
     <color name="expense_red">#F44336</color>
     <color name="progress_track">#E0E0E0</color>
 </resources>

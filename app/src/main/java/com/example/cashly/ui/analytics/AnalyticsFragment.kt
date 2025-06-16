@@ -21,6 +21,9 @@ import com.github.mikephil.charting.formatter.PercentFormatter
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
+import android.util.TypedValue
+import android.content.res.Configuration
+import com.google.android.material.R as MaterialR
 
 class AnalyticsFragment : Fragment() {
     private lateinit var transactionDatabase: TransactionDatabase
@@ -91,9 +94,11 @@ class AnalyticsFragment : Fragment() {
             data = pieData
             description.isEnabled = false
             setUsePercentValues(true)
-            setEntryLabelColor(Color.WHITE)
+            setEntryLabelColor(getThemeTextColor())
+            setHoleColor(getThemeSurfaceColor())
             animateY(1000)
             invalidate()
+            legend.textColor = getThemeTextColor()
         }
     }
 
@@ -118,11 +123,12 @@ class AnalyticsFragment : Fragment() {
         val dataSet = LineDataSet(entries, label)
         dataSet.apply {
             color = if (type == TransactionType.INCOME) 
-                Color.rgb(76, 175, 80) else Color.rgb(244, 67, 54)
+                requireContext().getColor(R.color.income_green) else requireContext().getColor(R.color.expense_red)
             setCircleColor(color)
             lineWidth = 2f
             circleRadius = 4f
             setDrawCircleHole(false)
+            valueTextColor = getThemeTextColor()
         }
 
         val xAxis = chart.xAxis
@@ -133,13 +139,19 @@ class AnalyticsFragment : Fragment() {
             )
             labelRotationAngle = -45f
             granularity = 1f
+            textColor = getThemeTextColor()
+            axisLineColor = getThemeTextColor()
+            gridColor = getThemeGridColor()
         }
 
         chart.apply {
             data = LineData(dataSet)
             description.isEnabled = false
             axisRight.isEnabled = false
-            legend.isEnabled = true
+            axisLeft.textColor = getThemeTextColor()
+            axisLeft.axisLineColor = getThemeTextColor()
+            axisLeft.gridColor = getThemeGridColor()
+            legend.textColor = getThemeTextColor()
             animateX(1000)
             invalidate()
         }
@@ -159,7 +171,7 @@ class AnalyticsFragment : Fragment() {
 
         val dataSet = PieDataSet(entries, "Expenses by Category")
         dataSet.colors = getCategoryColors(entries.size)
-        dataSet.valueTextColor = Color.WHITE
+        dataSet.valueTextColor = getThemeTextColor()
         dataSet.valueTextSize = 12f
         dataSet.valueFormatter = PercentFormatter(incomeChart)
 
@@ -167,7 +179,7 @@ class AnalyticsFragment : Fragment() {
         incomeChart.invalidate()
 
         // Update summary texts
-        val currencyFormat = NumberFormat.getCurrencyInstance()
+        val currencyFormat = NumberFormat.getCurrencyInstance(userPreferences.getCurrencyLocale())
         val totalExpenses = expenses.sumOf { it.amount }
         val totalIncome = income.sumOf { it.amount }
         val netBalance = totalIncome - totalExpenses
@@ -183,14 +195,36 @@ class AnalyticsFragment : Fragment() {
             budgetProgressText.text = "Budget Usage: ${String.format("%.1f", percentage)}%"
             budgetProgressText.setTextColor(
                 when {
-                    percentage >= 100 -> Color.RED
-                    percentage >= 80 -> Color.rgb(255, 165, 0) // Orange
-                    else -> Color.GREEN
+                    percentage >= 100 -> requireContext().getColor(R.color.accent_error)
+                    percentage >= 80 -> requireContext().getColor(R.color.accent_warning)
+                    else -> requireContext().getColor(R.color.accent_success)
                 }
             )
         } else {
             budgetProgressText.text = "No budget set"
             budgetProgressText.setTextColor(Color.GRAY)
+        }
+    }
+
+    private fun getThemeTextColor(): Int {
+        return if (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES) {
+            Color.WHITE // White text for dark mode
+        } else {
+            Color.BLACK // Black text for light mode
+        }
+    }
+
+    private fun getThemeSurfaceColor(): Int {
+        val typedValue = TypedValue()
+        requireContext().theme.resolveAttribute(MaterialR.attr.colorSurface, typedValue, true)
+        return typedValue.data
+    }
+
+    private fun getThemeGridColor(): Int {
+        return if (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES) {
+            Color.parseColor("#424242") // Darker gray for dark mode grid lines
+        } else {
+            Color.parseColor("#BDBDBD") // Lighter gray for light mode grid lines
         }
     }
 
@@ -208,11 +242,11 @@ class AnalyticsFragment : Fragment() {
 
     private fun getCategoryColors(count: Int): List<Int> {
         val baseColors = listOf(
-            Color.rgb(244, 67, 54),   // Red
-            Color.rgb(255, 152, 0),   // Orange
-            Color.rgb(76, 175, 80),   // Green
-            Color.rgb(33, 150, 243),  // Blue
-            Color.rgb(156, 39, 176)   // Purple
+            requireContext().getColor(R.color.expense_red),
+            requireContext().getColor(R.color.accent_warning),
+            requireContext().getColor(R.color.income_green),
+            requireContext().getColor(R.color.primary_light),
+            requireContext().getColor(R.color.secondary_accent)
         )
         return if (count <= baseColors.size) {
             baseColors.take(count)

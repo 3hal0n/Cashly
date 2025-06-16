@@ -16,6 +16,18 @@ class SplashActivity : AppCompatActivity() {
     private lateinit var viewPager: ViewPager2
     private lateinit var getStartedButton: MaterialButton
     private lateinit var tabLayout: TabLayout
+    private val handler = Handler(Looper.getMainLooper())
+    private val autoSlideRunnable = object : Runnable {
+        override fun run() {
+            val nextItem = if (viewPager.currentItem + 1 >= viewPager.adapter?.itemCount ?: 0) {
+                0
+            } else {
+                viewPager.currentItem + 1
+            }
+            viewPager.setCurrentItem(nextItem, true)
+            handler.postDelayed(this, 3000) // Slide every 3 seconds
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,9 +59,27 @@ class SplashActivity : AppCompatActivity() {
         
         TabLayoutMediator(tabLayout, viewPager) { _, _ -> }.attach()
 
+        // Start auto-sliding
+        handler.postDelayed(autoSlideRunnable, 3000)
+
+        // Pause auto-sliding when user interacts with the ViewPager
+        viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                handler.removeCallbacks(autoSlideRunnable)
+                handler.postDelayed(autoSlideRunnable, 3000)
+            }
+        })
+
         getStartedButton.setOnClickListener {
+            handler.removeCallbacks(autoSlideRunnable)
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        handler.removeCallbacks(autoSlideRunnable)
     }
 } 

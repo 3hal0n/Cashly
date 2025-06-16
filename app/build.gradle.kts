@@ -59,6 +59,12 @@ dependencies {
 
     implementation("com.google.android.material:material:1.9.0")
 
+    // PDF Generation
+    implementation("com.itextpdf:itext7-core:7.2.5")
+
+    // Security Crypto (for EncryptedSharedPreferences)
+    implementation("androidx.security:security-crypto:1.1.0-alpha06")
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

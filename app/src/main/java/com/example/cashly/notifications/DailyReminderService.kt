@@ -24,8 +24,8 @@ class DailyReminderService : Service() {
     override fun onBind(intent: Intent?): IBinder? = null
 
     companion object {
-        private const val REMINDER_HOUR = 20 // 8 PM
-        private const val REMINDER_MINUTE = 0
+        private const val REMINDER_HOUR = 9
+        private const val REMINDER_MINUTE = 13
 
         fun scheduleDailyReminder(context: Context) {
             val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
@@ -37,7 +37,7 @@ class DailyReminderService : Service() {
                 PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
             )
 
-            // Set the alarm to start at 8:00 PM
+            // Set the alarm
             val calendar = Calendar.getInstance().apply {
                 set(Calendar.HOUR_OF_DAY, REMINDER_HOUR)
                 set(Calendar.MINUTE, REMINDER_MINUTE)

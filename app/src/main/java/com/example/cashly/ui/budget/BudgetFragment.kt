@@ -24,6 +24,8 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import java.text.NumberFormat
 import java.util.*
+import android.util.TypedValue
+import android.content.res.Configuration
 
 class BudgetFragment : Fragment() {
     private lateinit var transactionDatabase: TransactionDatabase
@@ -87,7 +89,7 @@ class BudgetFragment : Fragment() {
         progressText.text = getString(R.string.budget_progress_percentage, progress)
 
         val balance = monthlyBudget - currentExpenses
-        val currencyFormat = NumberFormat.getCurrencyInstance()
+        val currencyFormat = NumberFormat.getCurrencyInstance(userPreferences.getCurrencyLocale())
         balanceText.text = getString(R.string.budget_remaining, currencyFormat.format(balance))
 
         if (monthlyBudget > 0) {
@@ -125,9 +127,10 @@ class BudgetFragment : Fragment() {
 
         val dataSet = BarDataSet(entries, "Budget vs Expenses")
         dataSet.colors = listOf(
-            Color.rgb(76, 175, 80),  // Green for budget
-            Color.rgb(244, 67, 54)   // Red for expenses
+            requireContext().getColor(R.color.income_green),  // Green for budget
+            requireContext().getColor(R.color.expense_red)   // Red for expenses
         )
+        dataSet.valueTextColor = getThemeTextColor()
 
         val barData = BarData(dataSet)
         barData.barWidth = 0.5f
@@ -136,6 +139,7 @@ class BudgetFragment : Fragment() {
             data = barData
             description.isEnabled = false
             legend.isEnabled = true
+            legend.textColor = getThemeTextColor()
             setDrawGridBackground(false)
             
             xAxis.apply {
@@ -143,13 +147,35 @@ class BudgetFragment : Fragment() {
                 valueFormatter = IndexAxisValueFormatter(listOf("Budget", "Expenses"))
                 granularity = 1f
                 setDrawGridLines(false)
+                textColor = getThemeTextColor()
+                axisLineColor = getThemeTextColor()
+                gridColor = getThemeGridColor()
             }
             
             axisRight.isEnabled = false
             axisLeft.setDrawGridLines(false)
+            axisLeft.textColor = getThemeTextColor()
+            axisLeft.axisLineColor = getThemeTextColor()
+            axisLeft.gridColor = getThemeGridColor()
             
             animateY(1000)
             invalidate()
+        }
+    }
+
+    private fun getThemeTextColor(): Int {
+        return if (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES) {
+            Color.WHITE // White text for dark mode
+        } else {
+            Color.BLACK // Black text for light mode
+        }
+    }
+
+    private fun getThemeGridColor(): Int {
+        return if (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES) {
+            Color.parseColor("#424242") // Darker gray for dark mode grid lines
+        } else {
+            Color.parseColor("#BDBDBD") // Lighter gray for light mode grid lines
         }
     }
 

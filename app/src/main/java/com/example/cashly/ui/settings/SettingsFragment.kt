@@ -11,6 +11,7 @@ import android.widget.Button
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.cashly.R
@@ -18,6 +19,10 @@ import com.example.cashly.data.BackupManager
 import com.example.cashly.data.Transaction
 import com.example.cashly.data.TransactionDatabase
 import com.example.cashly.data.UserPreferences
+import com.google.android.material.button.MaterialButton
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.materialswitch.MaterialSwitch
+import com.google.android.material.textfield.TextInputEditText
 import java.util.Currency
 import java.util.Date
 import java.util.Locale
@@ -30,6 +35,8 @@ class SettingsFragment : Fragment() {
     private lateinit var saveButton: Button
     private lateinit var backupButton: Button
     private lateinit var restoreButton: Button
+    private lateinit var changePinButton: MaterialButton
+    private lateinit var darkModeSwitch: MaterialSwitch
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -60,8 +67,12 @@ class SettingsFragment : Fragment() {
         saveButton = view.findViewById(R.id.save_button)
         backupButton = view.findViewById(R.id.backup_button)
         restoreButton = view.findViewById(R.id.restore_button)
+        changePinButton = view.findViewById(R.id.changePinButton)
+        darkModeSwitch = view.findViewById(R.id.darkModeSwitch)
 
         setupCurrencySpinner()
+        setupPinChangeButton()
+        setupDarkModeSwitch()
 
         saveButton.setOnClickListener {
             saveCurrencySettings()
@@ -99,6 +110,23 @@ class SettingsFragment : Fragment() {
         }
 
         restoreButton.isEnabled = backupManager.hasBackup()
+    }
+
+    private fun setupDarkModeSwitch() {
+        darkModeSwitch.isChecked = userPreferences.getTheme() == "dark"
+        darkModeSwitch.setOnCheckedChangeListener { _, isChecked ->
+            val theme = if (isChecked) "dark" else "light"
+            userPreferences.setTheme(theme)
+            applyTheme(theme)
+        }
+    }
+
+    private fun applyTheme(theme: String) {
+        when (theme) {
+            "dark" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            "light" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            else -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+        }
     }
 
     private fun updateCurrencySpinner(currency: String) {
@@ -148,7 +176,8 @@ class SettingsFragment : Fragment() {
             "CNY" to "Chinese Yuan",
             "INR" to "Indian Rupee",
             "AUD" to "Australian Dollar",
-            "CAD" to "Canadian Dollar"
+            "CAD" to "Canadian Dollar",
+            "LKR" to "Sri Lankan Rupees"
         )
 
         val adapter = ArrayAdapter(
@@ -165,6 +194,51 @@ class SettingsFragment : Fragment() {
         if (position != -1) {
             currencySpinner.setSelection(position)
         }
+    }
+
+    private fun setupPinChangeButton() {
+        changePinButton.setOnClickListener {
+            showChangePinDialog()
+        }
+    }
+
+    private fun showChangePinDialog() {
+        val dialogView = LayoutInflater.from(requireContext())
+            .inflate(R.layout.dialog_change_pin, null)
+
+        val currentPinInput = dialogView.findViewById<TextInputEditText>(R.id.currentPinInput)
+        val newPinInput = dialogView.findViewById<TextInputEditText>(R.id.newPinInput)
+        val confirmPinInput = dialogView.findViewById<TextInputEditText>(R.id.confirmPinInput)
+
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(R.string.change_pin)
+            .setView(dialogView)
+            .setPositiveButton(R.string.change) { _, _ ->
+                val currentPin = currentPinInput.text?.toString() ?: ""
+                val newPin = newPinInput.text?.toString() ?: ""
+                val confirmPin = confirmPinInput.text?.toString() ?: ""
+
+                when {
+                    currentPin.length != 4 -> {
+                        Toast.makeText(context, R.string.pin_length_error, Toast.LENGTH_SHORT).show()
+                    }
+                    !userPreferences.validatePin(currentPin) -> {
+                        Toast.makeText(context, R.string.incorrect_pin_error, Toast.LENGTH_SHORT).show()
+                    }
+                    newPin.length != 4 -> {
+                        Toast.makeText(context, R.string.pin_length_error, Toast.LENGTH_SHORT).show()
+                    }
+                    newPin != confirmPin -> {
+                        Toast.makeText(context, R.string.pin_mismatch_error, Toast.LENGTH_SHORT).show()
+                    }
+                    else -> {
+                        userPreferences.setPin(newPin)
+                        Toast.makeText(context, R.string.pin_change_success, Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+            .setNegativeButton(R.string.cancel, null)
+            .show()
     }
 
     private fun saveCurrencySettings() {

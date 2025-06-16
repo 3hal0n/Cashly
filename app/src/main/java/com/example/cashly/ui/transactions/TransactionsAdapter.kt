@@ -10,19 +10,24 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.cashly.R
 import com.example.cashly.data.Transaction
 import com.example.cashly.data.TransactionType
+import com.example.cashly.data.UserPreferences
 import com.google.android.material.button.MaterialButton
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.Locale
+import java.util.Currency
 
 class TransactionsAdapter(
     private var transactions: List<Transaction>,
+    private val userPreferences: UserPreferences,
     private val onEditClick: (Transaction) -> Unit,
     private val onDeleteClick: (Transaction) -> Unit
 ) : RecyclerView.Adapter<TransactionsAdapter.ViewHolder>() {
 
     private val dateFormat = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault())
-    private val currencyFormat = NumberFormat.getCurrencyInstance()
+    private val currencyFormat: NumberFormat = run {
+        NumberFormat.getCurrencyInstance(userPreferences.getCurrencyLocale())
+    }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val categoryIconImageView: ImageView = view.findViewById(R.id.categoryIcon)

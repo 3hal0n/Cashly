@@ -25,6 +25,8 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
+import java.text.NumberFormat
+import java.util.Currency
 
 class HomeFragment : Fragment() {
     private lateinit var transactionDatabase: TransactionDatabase
@@ -103,6 +105,7 @@ class HomeFragment : Fragment() {
     private fun setupRecyclerView() {
         transactionAdapter = TransactionsAdapter(
             emptyList(),
+            userPreferences,
             onEditClick = { transaction -> showEditTransactionDialog(transaction) },
             onDeleteClick = { transaction -> showDeleteTransactionDialog(transaction) }
         )
@@ -267,7 +270,8 @@ class HomeFragment : Fragment() {
             .inflate(R.layout.dialog_edit_transaction, null)
 
         with(dialogView) {
-            findViewById<TextInputEditText>(R.id.editAmountInput).setText(transaction.amount.toString())
+            val currencyFormat = NumberFormat.getCurrencyInstance(userPreferences.getCurrencyLocale())
+            findViewById<TextInputEditText>(R.id.editAmountInput).setText(currencyFormat.format(transaction.amount))
             findViewById<TextInputEditText>(R.id.editDescriptionInput).setText(transaction.description)
             findViewById<AutoCompleteTextView>(R.id.editCategorySpinner).setText(transaction.category)
 
